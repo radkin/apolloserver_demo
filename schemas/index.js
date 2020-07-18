@@ -9,7 +9,7 @@ module.exports = `
     name: String
     group: String
     locations: JSON
-    masterVersion: String
+    baselinePrice: String
   }
 
   type View implements Node {
@@ -50,7 +50,7 @@ module.exports = `
 
   type Product {
     name: String!
-    version: String!
+    price: String!
     datePosted: String
     domain: String
   }
