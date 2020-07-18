@@ -24,7 +24,7 @@ test.before(async t => {
 
     let myObj = {
       name: common.getCustomerName(),
-      version: common.getRandomSemVer(),
+      price: common.getRandomPrice(),
       datePosted,
       domain: 'stores'
     };
@@ -41,7 +41,7 @@ test.before(async t => {
       await api.create(client, {
         group: apps[n].group,
         name,
-        masterVersion: common.getRandomSemVer()
+        baselinePrice: common.getRandomPrice()
       });
     }
   }
@@ -53,7 +53,7 @@ test.before(async t => {
       await api.deployToLocation(client, {
         name,
         location: locs[e],
-        version: common.getRandomSemVer(),
+        price: common.getRandomPrice(),
         timestamp: moment().toISOString(),
       });
     }
