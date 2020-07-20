@@ -1,6 +1,7 @@
 {
   "name": "apolloserver-demo",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "private": true,
   "description": "apollo server basic demo implementation",
   "main": "index.js",
   "scripts": {
@@ -23,6 +24,9 @@
     "ioredis": "^4.14.1",
     "lorem-ipsum": "^2.0.3",
     "uuid": "^3.3.3"
+  },
+  "engines": {
+    "node": "12.x"
   },
   "devDependencies": {
     "ava": "^1.4.1",
