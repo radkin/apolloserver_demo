@@ -6,9 +6,9 @@ const CustomersAPI = require('./lib/datasources/customers-api');
 const LocationsAPI = require('./lib/datasources/locations-api');
 
 const Redis = require('ioredis'); //./lib/redis-client');
-const REDIS_SERVER = process.env.REDIS_SERVER || 'localhost';
 const CLIENT_HOST = process.env.CLIENT_HOST || 'localhost';
-const client = new Redis(6379, REDIS_SERVER);
+const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6379';
+const client = new Redis(REDIS_URL);
 const server = new ApolloServer({
   cors: {
       credentials: true,
