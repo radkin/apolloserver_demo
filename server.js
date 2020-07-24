@@ -8,25 +8,25 @@ const CustomersAPI = require('./lib/datasources/customers-api');
 const LocationsAPI = require('./lib/datasources/locations-api');
 
 const APOLLO_SERVER_PORT = process.env.PORT || '9000';
-const CLIENT_HOST = process.env.CLIENT_HOST || 'localhost';
+const CLIENT_HOST = `https://${process.env.CLIENT_HOST}` || 'http://localhost';
 const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6379';
 
 const client = new Redis(REDIS_URL);
 const server = new ApolloServer({
-  cors: {
-      credentials: true,
-      origin: (origin, callback) => {
-          const whitelist = [
-              `http://${CLIENT_HOST}`,
-          ];
-
-          if (whitelist.indexOf(origin) !== -1) {
-              callback(null, true)
-          } else {
-              callback(new Error("Not allowed by CORS"))
-          }
-      }
-  },
+  // cors: {
+  //     credentials: true,
+  //     origin: (origin, callback) => {
+  //         const whitelist = [
+  //             CLIENT_HOST,
+  //         ];
+  //
+  //         if (whitelist.indexOf(origin) !== -1) {
+  //             callback(null, true)
+  //         } else {
+  //             callback(new Error("Not allowed by CORS"))
+  //         }
+  //     }
+  // },
     typeDefs: schemas,
     resolvers,
     dataSources: () => {
