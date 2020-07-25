@@ -29,6 +29,10 @@ const server = new ApolloServer({
   // },
     typeDefs: schemas,
     resolvers,
+    debug: true,
+    tracing: true,
+    introspection: true,
+    playground: true,
     dataSources: () => {
       return {
         productsApi: new ProductsAPI(),
