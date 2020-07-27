@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "ava --fail-fast --color --verbose",
-    "start": "node server"
+    "start": "DEBUG=ioredis:* node server"
   },
   "keywords": [
     "graphql",
