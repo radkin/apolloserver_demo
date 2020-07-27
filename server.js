@@ -9,7 +9,9 @@ const LocationsAPI = require('./lib/datasources/locations-api');
 
 const APOLLO_SERVER_PORT = process.env.PORT || '9000';
 const CLIENT_HOST = `https://${process.env.CLIENT_HOST}` || 'http://localhost';
-const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6379';
+// const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6379';
+
+const REDIS_URL = process.env.REDIS_URL;
 
 const client = new Redis(REDIS_URL);
 const server = new ApolloServer({
