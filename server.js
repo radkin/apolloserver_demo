@@ -11,7 +11,7 @@ const APOLLO_SERVER_PORT = process.env.PORT || '9000';
 const CLIENT_HOST = process.env.CLIENT_HOST;
 const REDIS_URL = process.env.REDIS_URL;
 
-const client = new Redis(REDIS_URL, { showFriendlyErrorStack: true });
+const client = new Redis(REDIS_URL);
 console.log("Allowing CORS from: " + CLIENT_HOST);
 const server = new ApolloServer({
   cors: {
