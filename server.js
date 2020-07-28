@@ -1,20 +1,24 @@
 const { ApolloServer } = require('apollo-server');
+const Redis = require('ioredis'); //./lib/redis-client');
+
 const schemas = require('./schemas');
 const resolvers = require('./resolvers');
 const ProductsAPI = require('./lib/datasources/products-api');
 const CustomersAPI = require('./lib/datasources/customers-api');
 const LocationsAPI = require('./lib/datasources/locations-api');
 
-const Redis = require('ioredis'); //./lib/redis-client');
-const CLIENT_HOST = process.env.CLIENT_HOST || 'localhost';
-const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6379';
-const client = new Redis(REDIS_URL);
+const APOLLO_SERVER_PORT = process.env.PORT || '9000';
+const CLIENT_HOST = process.env.CLIENT_HOST;
+const REDIS_URL = process.env.REDIS_URL;
+
+const client = new Redis(REDIS_URL, { showFriendlyErrorStack: true });
+console.log("Allowing CORS from: " + CLIENT_HOST);
 const server = new ApolloServer({
   cors: {
       credentials: true,
       origin: (origin, callback) => {
           const whitelist = [
-              `http://${CLIENT_HOST}`,
+              CLIENT_HOST,
           ];
 
           if (whitelist.indexOf(origin) !== -1) {
@@ -39,7 +43,7 @@ const server = new ApolloServer({
     }
 });
 
-server.listen({ port:9000}).then(({ url }) => {
+server.listen({ port:APOLLO_SERVER_PORT}).then(({ url }) => {
   console.log(`🚀 Server ready at ${url}`);
   console.log(`Try your health check at: ${url}.well-known/apollo/server-health`);
 });
