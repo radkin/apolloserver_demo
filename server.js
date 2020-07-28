@@ -15,20 +15,20 @@ const REDIS_URL = process.env.REDIS_URL;
 
 const client = new Redis(REDIS_URL, { showFriendlyErrorStack: true });
 const server = new ApolloServer({
-  // cors: {
-  //     credentials: true,
-  //     origin: (origin, callback) => {
-  //         const whitelist = [
-  //             CLIENT_HOST,
-  //         ];
-  //
-  //         if (whitelist.indexOf(origin) !== -1) {
-  //             callback(null, true)
-  //         } else {
-  //             callback(new Error("Not allowed by CORS"))
-  //         }
-  //     }
-  // },
+  cors: {
+      credentials: true,
+      origin: (origin, callback) => {
+          const whitelist = [
+              CLIENT_HOST,
+          ];
+
+          if (whitelist.indexOf(origin) !== -1) {
+              callback(null, true)
+          } else {
+              callback(new Error("Not allowed by CORS"))
+          }
+      }
+  },
     typeDefs: schemas,
     resolvers,
     dataSources: () => {
