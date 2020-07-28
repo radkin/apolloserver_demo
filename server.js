@@ -1,5 +1,5 @@
 const { ApolloServer } = require('apollo-server');
-const Redis = require('ioredis'); //./lib/redis-client');
+const Redis = require('ioredis');
 
 const schemas = require('./schemas');
 const resolvers = require('./resolvers');
@@ -8,17 +8,19 @@ const CustomersAPI = require('./lib/datasources/customers-api');
 const LocationsAPI = require('./lib/datasources/locations-api');
 
 const APOLLO_SERVER_PORT = process.env.PORT || '9000';
-const CLIENT_HOST = process.env.CLIENT_HOST;
+const CLIENT_HOST1 = process.env.CLIENT_HOST1;
+const CLIENT_HOST2 = process.env.CLIENT_HOST2;
 const REDIS_URL = process.env.REDIS_URL;
 
 const client = new Redis(REDIS_URL);
-console.log("Allowing CORS from: " + CLIENT_HOST);
+console.log("Allowing CORS from: " + CLIENT_HOST1 + " and " + CLIENT_HOST2);
 const server = new ApolloServer({
   cors: {
       credentials: true,
       origin: (origin, callback) => {
           const whitelist = [
-              CLIENT_HOST,
+              CLIENT_HOST1,
+              CLIENT_HOST2
           ];
 
           if (whitelist.indexOf(origin) !== -1) {
