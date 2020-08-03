@@ -8,13 +8,13 @@ tested:
 # Apollo Server Configuration
 
 ## Enable the apollo client to connect
-Set the Apollo Client hostname in our CORS whitelist. The environment variable is **CLIENT_HOST**:
+Set the Apollo Client hostname in our CORS whitelist with an environment variable.
 
-`export CLIENT_HOST='my.frontend.client'`
+ **CLIENT_HOST1**:
+`export CLIENT_HOST1='my.frontend.client'`
 
-or if using Heroku do it like this:
-
-`heroku config:set CLIENT_HOST='my.apollo.frontend.client' -a my_app_name`
+or if using _Heroku_ do it like this:
+`heroku config:set CLIENT_HOST1='my.apollo.frontend.client' -a my_app_name`
 
 ## Heroku Redis special notes
 If using Heroku the redis server information is automatically exported using a variable called **REDIS_URL** . Our server.js will use it if that variable is set.
@@ -36,6 +36,8 @@ providers: [
     deps: [HttpLink]
   },
   ```
+If you decide to set the client uri with a variable it will look like this:
+`const apolloServer = 'http://localhost:9000/api/graphql';`
 
 ### Author
 radkin@github.com
