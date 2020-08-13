@@ -1,0 +1,21 @@
+version: '0.1'
+networks:
+  default:
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.37.0/24
+
+services:
+
+  redis:
+    image: redis:5
+
+  apolloserver:
+   image: "apolloserver:0.0.1"
+   ports:
+     - 9000:9000
+   links:
+     - redis
+   environment:
+     - REDIS_PATH=redis://redis:6379/0
