@@ -40,9 +40,19 @@ services:
 
   apolloserver:
    image: "radkin/apolloserver:latest"
+   build: .
    ports:
-     - 9000:9000
+     - '9000' # no port exposed
    links:
      - redis-replica
    environment:
      - REDIS_PATH=redis://redis:6379/0
+
+  lb:
+    image: dockercloud/haproxy
+    ports:
+      - '80:80'
+    links:
+      - apolloserver
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
