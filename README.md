@@ -39,5 +39,21 @@ providers: [
 If you decide to set the client uri with a variable it will look like this:
 `const apolloServer = 'http://localhost:9000/api/graphql';`
 
+# Docker Instructions
+
+## Build the container
+build an Apollo Server docker image (remove brackets) like this:
+`docker build -t [container-name:][version] .`
+
+## Docker Compose
+A docker-compose file has been provided to facilitate build automation, locally run environments, and K8S cloud compute scaling.
+
+### Running a local Apollo Server with docker
+When you run the command below you will notice that it starts up an Apollo Server instance, redis replica, and redis primary server. This is by design as we need to simulate the read-only, one way replication expected from a replica.
+1. Obtain a login for this docker registry
+2. `docker pull radkin/apolloserver:latest`
+3. `docker-compose up -d`
+
+**note:** you can skip the 1st step (login) if you build it locally.
 ### Author
 radkin@github.com

@@ -39,7 +39,7 @@ services:
       - ALLOW_EMPTY_PASSWORD=yes # No password required to connect to node
 
   apolloserver:
-   image: "apolloserver:0.0.1"
+   image: "radkin/apolloserver:latest"
    ports:
      - 9000:9000
    links:
