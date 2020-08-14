@@ -11,9 +11,11 @@ tested:
 Set the Apollo Client hostname in our CORS whitelist with an environment variable.
 
  **CLIENT_HOST1**:
+
 `export CLIENT_HOST1='my.frontend.client'`
 
 or if using _Heroku_ do it like this:
+
 `heroku config:set CLIENT_HOST1='my.apollo.frontend.client' -a my_app_name`
 
 ## Heroku Redis special notes
@@ -37,6 +39,7 @@ providers: [
   },
   ```
 If you decide to set the client uri with a variable it will look like this:
+
 `const apolloServer = 'http://localhost:9000/api/graphql';`
 
 # Docker Instructions
@@ -56,6 +59,12 @@ When you run the command below you will notice that it starts up an Apollo Serve
 docker pull radkin/apolloserver:latest
 docker-compose up -d
 ```
+
+### scaling apolloserver horizontally
+
+This command will allow you to run an additional apolloserver
+
+`docker-compose scale apolloserver=2`
 
 ### Author
 radkin@github.com
