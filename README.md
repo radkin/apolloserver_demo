@@ -52,8 +52,10 @@ A docker-compose file has been provided to facilitate build automation, locally 
 ### Running a local Apollo Server with docker
 When you run the command below you will notice that it starts up an Apollo Server instance, redis replica, and redis primary server. This is by design as we need to simulate the read-only, one way replication expected from a replica.
 
-1. `docker pull radkin/apolloserver:latest`
-2. `docker-compose up -d`
+```bash
+docker pull radkin/apolloserver:latest
+docker-compose up -d
+```
 
 ### Author
 radkin@github.com
