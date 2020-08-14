@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: apolloserver
+  name: apolloserver
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: apolloserver
+    spec:
+      containers:
+      - env:
+        - name: REDIS_PATH
+          value: redis://redis:6379/0
+        image: radkin/apolloserver:latest
+        name: apolloserver
+        ports:
+        - containerPort: 9000
+        resources: {}
+      restartPolicy: Always
+status: {}

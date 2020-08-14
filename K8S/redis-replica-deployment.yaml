@@ -1,0 +1,39 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: redis-replica
+  name: redis-replica
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: redis-replica
+    spec:
+      containers:
+      - env:
+        - name: ALLOW_EMPTY_PASSWORD
+          value: "yes"
+        - name: REDIS_MASTER_HOST
+          value: redis-master
+        - name: REDIS_MASTER_PORT_NUMBER
+          value: "6379"
+        - name: REDIS_REPLICATION_MODE
+          value: slave
+        image: bitnami/redis:latest
+        name: redis-replica
+        ports:
+        - containerPort: 6379
+        resources: {}
+      restartPolicy: Always
+status: {}
