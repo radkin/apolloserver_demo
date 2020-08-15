@@ -1,53 +1,15 @@
 version: '3'
-networks:
-  default:
-    ipam:
-      driver: default
-      config:
-        - subnet: 192.168.37.0/24
-
 services:
-  fix-redis-volume-ownership: # This service is to authorise redis-master with ownership permissions
-    image: 'bitnami/redis:latest'
-    user: root
-    command: chown -R 1001:1001 /bitnami
-    volumes:
-      - ./data/redis:/bitnami
-      - ./data/redis/conf/redis.conf:/opt/bitnami/redis/conf/redis.conf
-
-  redis-master: # Setting up master node
-    image: 'bitnami/redis:latest'
-    ports:
-      - '6329:6379' # Port 6329 will be exposed to handle connections from outside server
-    environment:
-      - REDIS_REPLICATION_MODE=master # Assigning the node as a master
-      - ALLOW_EMPTY_PASSWORD=yes # No password authentication required/ provide password if needed
-    volumes:
-      - ./data/redis:/bitnami # Redis master data volume
-      - ./data/redis/conf/redis.conf:/opt/bitnami/redis/conf/redis.conf # Redis master configuration volume
-
-  redis-replica: # Setting up slave node
-    image: 'bitnami/redis:latest'
-    ports:
-      - '6379' # No port is exposed
-    links:
-      - redis-master # will only start after the master has booted completely
-    environment:
-      - REDIS_REPLICATION_MODE=slave # Assigning the node as slave
-      - REDIS_MASTER_HOST=redis-master # Host for the slave node is the redis-master node
-      - REDIS_MASTER_PORT_NUMBER=6379 # Port number for local
-      - ALLOW_EMPTY_PASSWORD=yes # No password required to connect to node
-
+  db:
+    image: redis:latest
+    container_name: db
+    networks:
+      - apollonet
   apolloserver:
    image: "radkin/apolloserver:latest"
    build: .
    ports:
-     - '9000' # no port exposed
-   links:
-     - redis-replica
-   environment:
-     - REDIS_PATH=redis://redis:6379/0
-
+     - '9000'
   lb:
     image: dockercloud/haproxy
     ports:
@@ -56,3 +18,6 @@ services:
       - apolloserver
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+networks:
+  apollonet:
+    driver: bridge
