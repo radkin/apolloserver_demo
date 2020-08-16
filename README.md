@@ -7,16 +7,23 @@ tested:
 
 # Apollo Server Configuration
 
-## Enable the apollo client to connect
+## CORS - Enable the apollo client to connect
 Set the Apollo Client hostname in our CORS whitelist with an environment variable.
 
- **CLIENT_HOST1**:
+ **CLIENT_HOST1**: `export CLIENT_HOST1='my.frontend.client'`
 
-`export CLIENT_HOST1='my.frontend.client'`
+* For instance, to run locally with nginx port forwarding 9000 to 80
+`export CLIENT_HOST1="http://localhost"`
+* The client expects to use this URL when running in a dev environment
+`http://localhost:9000/api/graphql`
 
-or if using _Heroku_ do it like this:
+**note** attempting to set the port will fail! For Example:
+`http://localhost:9000` does not work.
 
+* If using _Heroku_ do it like this:
 `heroku config:set CLIENT_HOST1='my.apollo.frontend.client' -a my_app_name`
+
+_please see apolloclient-demo for an **nginx.conf** suitable for development_
 
 ## Heroku Redis special notes
 If using Heroku the redis server information is automatically exported using a variable called **REDIS_URL** . Our server.js will use it if that variable is set.
