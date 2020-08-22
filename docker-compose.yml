@@ -1,11 +1,4 @@
-version: '3'
-networks:
-  default:
-    ipam:
-      driver: default
-      config:
-        - subnet: 192.168.37.0/24
-
+version: '3.3'
 services:
   fix-redis-volume-ownership: # This service is to authorise redis-master with ownership permissions
     image: 'bitnami/redis:latest'
@@ -29,8 +22,8 @@ services:
   redis-replica: # Setting up slave node
     image: 'bitnami/redis:latest'
     ports:
-      - '6379' # No port is exposed
-    links:
+      - '6379'
+    depends_on:
       - redis-master # will only start after the master has booted completely
     environment:
       - REDIS_REPLICATION_MODE=slave # Assigning the node as slave
@@ -39,14 +32,14 @@ services:
       - ALLOW_EMPTY_PASSWORD=yes # No password required to connect to node
 
   apolloserver:
-   image: "radkin/apolloserver:latest"
-   build: .
-   ports:
-     - '9000' # no port exposed
-   links:
-     - redis-replica
-   environment:
-     - REDIS_PATH=redis://redis:6379/0
+    image: "radkin/apolloserver:latest"
+    build: .
+    ports:
+      - '9000'
+    links:
+      - redis-replica
+    environment:
+      - REDIS_URL=redis://redis-replica:6379
 
   lb:
     image: dockercloud/haproxy

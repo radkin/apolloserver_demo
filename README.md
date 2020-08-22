@@ -7,16 +7,23 @@ tested:
 
 # Apollo Server Configuration
 
-## Enable the apollo client to connect
+## CORS - Enable the apollo client to connect
 Set the Apollo Client hostname in our CORS whitelist with an environment variable.
 
- **CLIENT_HOST1**:
+ **CLIENT_HOST1**: `export CLIENT_HOST1='my.frontend.client'`
 
-`export CLIENT_HOST1='my.frontend.client'`
+* For instance, to run locally with nginx port forwarding 9000 to 80
+`export CLIENT_HOST1="http://localhost"`
+* The client expects to use this URL when running in a dev environment
+`http://localhost:9000/api/graphql`
 
-or if using _Heroku_ do it like this:
+**note** attempting to set the port will fail! For Example:
+`http://localhost:9000` does not work.
 
+* If using _Heroku_ do it like this:
 `heroku config:set CLIENT_HOST1='my.apollo.frontend.client' -a my_app_name`
+
+_please see apolloclient-demo for an **nginx.conf** suitable for development_
 
 ## Heroku Redis special notes
 If using Heroku the redis server information is automatically exported using a variable called **REDIS_URL** . Our server.js will use it if that variable is set.
@@ -60,11 +67,25 @@ docker pull radkin/apolloserver:latest
 docker-compose up -d
 ```
 
-### scaling apolloserver horizontally
+### Scaling apolloserver horizontally
 
 This command will allow you to run an additional apolloserver
 
 `docker-compose scale apolloserver=2`
+
+### Watching containers and logging
+A good way to keep an eye on the containers is the open four horizontal windows and run the following commands (in order)
+`docker-compose up -d`
+then, in the same window, start the first command and move to the next with each subsequent command.
+```bash
+watch docker ps
+docker logs -f `docker ps | grep master | cut -d' ' -f1`
+docker logs -f `docker ps | grep replica | cut -d' ' -f1`
+docker logs -f `docker ps | grep apolloserver_1 | cut -d' ' -f1`
+```
+
+### Loading test data
+Test data is automatically loaded when starting up the cluster. It is hard set for redis port 6329, as is apollo. When running in Heroku this needs to be set manually and loaded via remote connection to the redis instance provided by Heroku.
 
 ### Author
 radkin@github.com
