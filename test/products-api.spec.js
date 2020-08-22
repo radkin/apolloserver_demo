@@ -2,7 +2,7 @@ const test = require('ava');
 const ProductsAPI = require('../lib/datasources/products-api');
 const api = new ProductsAPI();
 const Redis = require('ioredis');
-const client = new Redis();
+const client = new Redis('redis://localhost:6329');
 const TestCommon = require('../lib/common');
 const common = new TestCommon();
 

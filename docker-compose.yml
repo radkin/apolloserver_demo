@@ -22,7 +22,7 @@ services:
   redis-replica: # Setting up slave node
     image: 'bitnami/redis:latest'
     ports:
-      - '6379' # No port is exposed
+      - '6379'
     depends_on:
       - redis-master # will only start after the master has booted completely
     environment:
@@ -32,10 +32,14 @@ services:
       - ALLOW_EMPTY_PASSWORD=yes # No password required to connect to node
 
   apolloserver:
-   image: "radkin/apolloserver:latest"
-   build: .
-   ports:
-     - '9000'
+    image: "radkin/apolloserver:latest"
+    build: .
+    ports:
+      - '9000'
+    links:
+      - redis-replica
+    environment:
+      - REDIS_URL=redis://redis-replica:6379
 
   lb:
     image: dockercloud/haproxy

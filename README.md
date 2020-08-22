@@ -67,11 +67,25 @@ docker pull radkin/apolloserver:latest
 docker-compose up -d
 ```
 
-### scaling apolloserver horizontally
+### Scaling apolloserver horizontally
 
 This command will allow you to run an additional apolloserver
 
 `docker-compose scale apolloserver=2`
+
+### Watching containers and logging
+A good way to keep an eye on the containers is the open four horizontal windows and run the following commands (in order)
+`docker-compose up -d`
+then, in the same window, start the first command and move to the next with each subsequent command.
+```bash
+watch docker ps
+docker logs -f `docker ps | grep master | cut -d' ' -f1`
+docker logs -f `docker ps | grep replica | cut -d' ' -f1`
+docker logs -f `docker ps | grep apolloserver_1 | cut -d' ' -f1`
+```
+
+### Loading test data
+Test data is automatically loaded when starting up the cluster. It is hard set for redis port 6329, as is apollo. When running in Heroku this needs to be set manually and loaded via remote connection to the redis instance provided by Heroku.
 
 ### Author
 radkin@github.com
