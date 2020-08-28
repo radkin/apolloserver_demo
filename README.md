@@ -87,5 +87,9 @@ docker logs -f `docker ps | grep apolloserver_1 | cut -d' ' -f1`
 ### Loading test data
 Test data is automatically loaded when starting up the cluster. It is hard set for redis port 6329, as is apollo. When running in Heroku this needs to be set manually and loaded via remote connection to the redis instance provided by Heroku.
 
-### Author
-radkin@github.com
+## Distributed Microservices Demo
+"Apollo Server Demo" is part of a complete distributed microservices demo that has a frontend running "Apollo Client Demo" found [here](https://github.com/radkin/apolloclient_demo).
+![root directory](graphics/Apollo_client_server.png)
+
+## Author
+radkin@github.com (not a proper email address)
