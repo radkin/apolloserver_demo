@@ -10,17 +10,19 @@ const LocationsAPI = require('./lib/datasources/locations-api');
 const APOLLO_SERVER_PORT = process.env.PORT || '9000';
 const CLIENT_HOST1 = process.env.CLIENT_HOST1 || 'http://localhost';
 const CLIENT_HOST2 = process.env.CLIENT_HOST2;
+const CLIENT_HOST3 = process.env.CLIENT_HOST3;
 const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6379';
 
 const client = new Redis(REDIS_URL);
-console.log("Allowing CORS from: " + CLIENT_HOST1 + " and " + CLIENT_HOST2);
+console.log(`Allowing CORS from: ${CLIENT_HOST1}, ${CLIENT_HOST2}, and ${CLIENT_HOST3}`);
 const server = new ApolloServer({
   cors: {
       credentials: true,
       origin: (origin, callback) => {
           const whitelist = [
               CLIENT_HOST1,
-              CLIENT_HOST2
+              CLIENT_HOST2,
+              CLIENT_HOST3
           ];
 
           if (whitelist.indexOf(origin) !== -1) {
